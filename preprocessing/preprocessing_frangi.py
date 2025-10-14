@@ -92,12 +92,12 @@ def dice_score(pred, gt):
 
 if __name__ == "__main__":
     # --- Load input image ---
-    img = sitk.ReadImage("dataset/opennero/sub-001/anat/sub-001_T2w.nii.gz")
+    img = sitk.ReadImage("dataset/braindata/sub-001/anat/sub-001_T2w.nii.gz")
     img_data = sitk.GetArrayFromImage(img)
     spacing = img.GetSpacing()[::-1]
 
     # Optional: load ground-truth mask for evaluation
-    ground_truth_path = "../dataset/opennero/derivatives/mask/sub-001/sub-001_desc-mask_PVS.nii"
+    ground_truth_path = "../dataset/binary_epvs_groundtruth/mask/sub-001/sub-001_desc-mask_PVS.nii"
     gt_data = None
     if ground_truth_path and os.path.exists(ground_truth_path):
         gt_data = sitk.GetArrayFromImage(sitk.ReadImage(ground_truth_path))

@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-root_dir = Path("../dataset/opennero")
+root_dir = Path("../dataset/braindata")
 
 for nii_file in root_dir.rglob("*_T2w.nii"):
     mnc_file = nii_file.with_suffix(".mnc")

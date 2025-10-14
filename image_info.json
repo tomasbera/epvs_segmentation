@@ -1,0 +1,16 @@
+{
+    "data_type": "INT16",
+    "dimensions": {
+        "dim1": 208,
+        "dim2": 300,
+        "dim3": 320,
+        "dim4": 1
+    },
+    "datatype": 4,
+    "pixel_dimensions": {
+        "pixdim1": 0.799998,
+        "pixdim2": 0.800000,
+        "pixdim3": 0.800000,
+        "pixdim4": 3.200000
+    }
+}

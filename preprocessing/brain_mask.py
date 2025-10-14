@@ -2,7 +2,7 @@ import os
 import glob
 import subprocess
 
-input_dir = "../dataset/opennero"
+input_dir = "../dataset/braindata"
 
 # Find all T2w images
 t2_files = glob.glob(os.path.join(input_dir, "sub-*/anat/*_T2w.nii.gz"))

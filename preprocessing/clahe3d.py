@@ -74,9 +74,9 @@ def clahe_3d(image, mask, kernel_size=8, clip_limit=0.01, nbins=256):
     return out.astype(np.float32)
 
 if __name__ == "__main__":
-    in_nii = "dataset/opennero/sub-001/anat/sub-001_T2w.nii.gz"
-    mask_nii = "dataset/opennero/sub-001/anat/sub-001_T2w_brain.nii.gz"
-    out_nii = "dataset/opennero/sub-001/anat/sub-001_T2w_brainhist.nii.gz"
+    in_nii = "dataset/braindata/sub-001/anat/sub-001_T2w.nii.gz"
+    mask_nii = "dataset/braindata/sub-001/anat/sub-001_T2w_brain.nii.gz"
+    out_nii = "dataset/braindata/sub-001/anat/sub-001_T2w_brainhist.nii.gz"
 
     # load input and mask
     vol, affine, header = load_nifti(in_nii)
