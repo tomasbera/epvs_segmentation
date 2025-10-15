@@ -29,6 +29,8 @@ def run_preprocessing(base_data_path="dataset/braindata/*/anat/*_T2w_brain.nii.g
     print(base_data_path)
     print(mask_base_path)
     for img_path in glob.glob(os.path.join(base_data_path, image_pattern)):
+        print(img_path)
+
         subject_id = os.path.basename(os.path.dirname(os.path.dirname(img_path)))
         mask_path = os.path.join(mask_base_path, subject_id, f"{subject_id}_desc-mask_PVS.nii.gz")
 
