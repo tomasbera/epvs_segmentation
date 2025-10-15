@@ -17,7 +17,9 @@ def run_main():
     pixel_values = helpers.calculate_pixels(data_input[0])
 
 
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"device: {device}")
+
     model = UNet(
         spatial_dims=3,
         in_channels=1,
