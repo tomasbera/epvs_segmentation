@@ -8,13 +8,20 @@ from preprocess import run_preprocessing
 from train_model import train_model
 
 
-def run_main():
+def run_main(idun=False):
     model_dir = "./result_model"
+    data_input = None
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"device: {device}")
 
+    if idun:
+        base_data_path = "/cluster/projects/vc/data/mic/closed/MRI_PVS/opennero/braindata"
+        mask_base_path = "/cluster/projects/vc/data/mic/closed/MRI_PVS/opennero/binary_epvs_groundtruth/mask"
+        data_input = run_preprocessing(base_data_path=base_data_path, mask_base_path=mask_base_path)
 
-    data_input = run_preprocessing()
+    else:
+        data_input = run_preprocessing()
+
     helpers.show_transfer_data(data_input)
     pixel_values = helpers.calculate_pixels(data_input[0])
 
@@ -36,4 +43,4 @@ def run_main():
     train_model(model, data_input, loss_function, optimizer, 600, model_dir)
 
 if __name__ == "__main__":
-    run_main()
+    run_main(idun=True)

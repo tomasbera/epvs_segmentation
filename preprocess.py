@@ -13,23 +13,29 @@ from monai.utils import set_determinism
 
 
 
-def run_preprocessing():
+def run_preprocessing(base_data_path="dataset/braindata/*/anat/*_T2w_brain.nii.gz",
+                      mask_base_path="dataset/binary_epvs_groundtruth/mask/"):
     set_determinism(seed=999999)
 
     # =========================
     # Prepare dataset
     # =========================
+    # Base paths
+    image_pattern = "*/*_T2w_brain.nii.gz"
+
     data = []
-    for img_path in glob.glob('dataset/braindata/*/anat/*_T2w_brain.nii.gz'):
-        subject_id = os.path.basename(os.path.dirname(os.path.dirname(img_path)))  # e.g. 'sub-001'
-        mask_path = f'dataset/binary_epvs_groundtruth/mask/{subject_id}/{subject_id}_desc-mask_PVS.nii.gz'
+    # Search for images
+    for img_path in glob.glob(os.path.join(base_data_path, image_pattern)):
+        subject_id = os.path.basename(os.path.dirname(os.path.dirname(img_path)))
+        mask_path = os.path.join(mask_base_path, subject_id, f"{subject_id}_desc-mask_PVS.nii.gz")
+
         if os.path.exists(mask_path):
             data.append({
                 "image": img_path,
                 "label": mask_path
             })
         else:
-            print(f"⚠️ Warning: Mask not found for {subject_id}")
+            print(f"Warning: Mask not found for {subject_id}")
 
     print(f"Loaded {len(data)} image-mask pairs.")
 
