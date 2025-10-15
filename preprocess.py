@@ -12,41 +12,28 @@ from monai.data import Dataset, DataLoader, CacheDataset
 from monai.utils import set_determinism
 
 
-
-def run_preprocessing(base_data_path="dataset/braindata/*/anat/*_T2w_brain.nii.gz",
-                      mask_base_path="dataset/binary_epvs_groundtruth/mask/"):
+def run_preprocessing(base_data_path="/cluster/projects/vc/data/mic/closed/MRI_PVS/opennero/braindata",
+                      mask_base_path="/cluster/projects/vc/data/mic/closed/MRI_PVS/opennero/binary_epvs_groundtruth/mask"):
     set_determinism(seed=999999)
-
-    # =========================
-    # Prepare dataset
-    # =========================
-    # Base paths
     image_pattern = "*/*_T2w_brain.nii.gz"
-
     data = []
-    # Search for images
 
-    print(base_data_path)
-    print(mask_base_path)
+    print("Base image path:", base_data_path)
+    print("Base mask path:", mask_base_path)
+
     for img_path in glob.glob(os.path.join(base_data_path, image_pattern)):
-        print("hello")
-        print(img_path)
-
+        print("Found image:", img_path)
         subject_id = os.path.basename(os.path.dirname(os.path.dirname(img_path)))
         mask_path = os.path.join(mask_base_path, subject_id, f"{subject_id}_desc-mask_PVS.nii.gz")
-
-        print(img_path)
-        print(mask_path)
+        print("Mask path:", mask_path)
 
         if os.path.exists(mask_path):
-            data.append({
-                "image": img_path,
-                "label": mask_path
-            })
+            data.append({"image": img_path, "label": mask_path})
         else:
             print(f"Warning: Mask not found for {subject_id}")
 
     print(f"Loaded {len(data)} image-mask pairs.")
+
 
     # Split train/test
     cache = False
