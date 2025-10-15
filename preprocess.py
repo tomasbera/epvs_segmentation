@@ -12,8 +12,10 @@ from monai.data import Dataset, DataLoader, CacheDataset
 from monai.utils import set_determinism
 
 
-def run_preprocessing(base_data_path="/cluster/projects/vc/data/mic/closed/MRI_PVS/opennero/braindata",
-                      mask_base_path="/cluster/projects/vc/data/mic/closed/MRI_PVS/opennero/binary_epvs_groundtruth/mask"):
+def run_preprocessing(
+    base_data_path="/cluster/projects/vc/data/mic/closed/MRI_PVS/opennero/braindata",
+    mask_base_path="/cluster/projects/vc/data/mic/closed/MRI_PVS/opennero/binary_epvs_groundtruth/mask"
+):
     set_determinism(seed=999999)
     image_pattern = "*/*_T2w_brain.nii.gz"
     data = []
@@ -21,7 +23,11 @@ def run_preprocessing(base_data_path="/cluster/projects/vc/data/mic/closed/MRI_P
     print("Base image path:", base_data_path)
     print("Base mask path:", mask_base_path)
 
-    for img_path in glob.glob(os.path.join(base_data_path, image_pattern)):
+    # Use f-string to correctly expand wildcard
+    found_images = glob.glob(f"{base_data_path}/{image_pattern}")
+    print("Total images found:", len(found_images))
+
+    for img_path in found_images:
         print("Found image:", img_path)
         subject_id = os.path.basename(os.path.dirname(os.path.dirname(img_path)))
         mask_path = os.path.join(mask_base_path, subject_id, f"{subject_id}_desc-mask_PVS.nii.gz")
@@ -31,6 +37,9 @@ def run_preprocessing(base_data_path="/cluster/projects/vc/data/mic/closed/MRI_P
             data.append({"image": img_path, "label": mask_path})
         else:
             print(f"Warning: Mask not found for {subject_id}")
+
+    if len(data) == 0:
+        raise RuntimeError("No image-mask pairs found. Check your paths!")
 
     print(f"Loaded {len(data)} image-mask pairs.")
 
