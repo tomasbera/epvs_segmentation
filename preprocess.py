@@ -24,7 +24,8 @@ def run_preprocessing(
     print("Base mask path:", mask_base_path)
 
     # Use f-string to correctly expand wildcard
-    found_images = glob.glob(f"{base_data_path}/{image_pattern}")
+    image_pattern = "**/*_T2w_brain.nii.gz"  # recursive pattern
+    found_images = glob.glob(os.path.join(base_data_path, image_pattern), recursive=True)
     print("Total images found:", len(found_images))
 
     for img_path in found_images:
