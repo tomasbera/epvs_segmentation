@@ -17,22 +17,13 @@ def run_preprocessing(
     mask_base_path="/cluster/projects/vc/data/mic/closed/MRI_PVS/opennero/binary_epvs_groundtruth/mask"
 ):
     set_determinism(seed=999999)
-    image_pattern = "*/*_T2w_brain.nii.gz"
-    data = []
-
-    print("Base image path:", base_data_path)
-    print("Base mask path:", mask_base_path)
-
-    # Use f-string to correctly expand wildcard
-    image_pattern = "**/*_T2w_brain.nii.gz"  # recursive pattern
+    image_pattern = "**/*_T2w_brain.nii.gz"
     found_images = glob.glob(os.path.join(base_data_path, image_pattern), recursive=True)
-    print("Total images found:", len(found_images))
 
+    data = []
     for img_path in found_images:
-        print("Found image:", img_path)
         subject_id = os.path.basename(os.path.dirname(os.path.dirname(img_path)))
         mask_path = os.path.join(mask_base_path, subject_id, f"{subject_id}_desc-mask_PVS.nii.gz")
-        print("Mask path:", mask_path)
 
         if os.path.exists(mask_path):
             data.append({"image": img_path, "label": mask_path})
