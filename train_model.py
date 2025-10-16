@@ -5,7 +5,7 @@ import torch
 from helpers import dice_val
 
 
-def train_model(model, data, loss, optim, max_epochs, model_dir, test_interval = 2, device=torch.device("cuda" if torch.cuda.is_available() else "cpu")):
+def train_model(model, data, loss, optim, max_epochs, model_dir, test_interval = 2, device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")):
     best_metric = -1
     best_metric_epoch = -1
     save_loss_train = []

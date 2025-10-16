@@ -11,7 +11,7 @@ from train_model import train_model
 def run_main(idun=False):
     model_dir = "./result_model"
     data_input = None
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(f"device: {device}")
 
     if idun:
