@@ -4,6 +4,11 @@ import torch
 
 from helpers import dice_val
 
+def to_float(x):
+    if isinstance(x, torch.Tensor):
+        return x.detach().cpu().item()  # GPU tensor → float
+    return float(x)  # already float
+
 
 def train_model(model, data, loss, optim, max_epochs, model_dir, test_interval = 2, device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")):
     best_metric = -1
@@ -49,12 +54,12 @@ def train_model(model, data, loss, optim, max_epochs, model_dir, test_interval =
 
         train_epoch_loss /= train_step
         print(f'Epoch_loss: {train_epoch_loss:.4f}')
-        save_loss_train.append(train_epoch_loss)  # <- append float directly
+        save_loss_train.append(to_float(train_epoch_loss))
         np.save(os.path.join(model_dir, 'loss_train.npy'), save_loss_train)
 
         epoch_metric_train /= train_step
         print(f'Epoch_metric: {epoch_metric_train:.4f}')
-        save_metrics_train.append(epoch_metric_train)  # <- append float directly
+        save_metrics_train.append(to_float(epoch_metric_train))
         np.save(os.path.join(model_dir, 'metric_train.npy'), save_metrics_train)
 
         if (epoch + 1) % test_interval == 0:
