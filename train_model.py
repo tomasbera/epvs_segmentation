@@ -1,6 +1,9 @@
 import os
+import sys
+
 import numpy as np
 import torch
+from tqdm import tqdm
 
 from helpers import dice_val
 
@@ -20,7 +23,7 @@ def train_model(model, data, loss, optim, max_epochs, model_dir, test_interval =
     save_metrics_val = []
     train_loader, test_loader = data
 
-    for epoch in range(max_epochs):
+    for epoch in tqdm(range(max_epochs)):
         print("-"*5)
         print(f"Epoch {epoch+1}/{max_epochs}")
         model.train()
@@ -28,7 +31,7 @@ def train_model(model, data, loss, optim, max_epochs, model_dir, test_interval =
         train_step = 0
         epoch_metric_train = 0
 
-        for batch in train_loader:
+        for batch in tqdm(train_loader, desc=f"Training epoch {epoch + 1}", position=0, leave=True):
 
             train_step += 1
             volume = batch["image"]
