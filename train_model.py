@@ -93,6 +93,7 @@ def train_model(model, data, loss, optim, max_epochs, model_dir, test_interval =
                 epoch_metric_val /= test_step
                 print(f'test_dice_epoch: {epoch_metric_val:.4f}')
                 print("Type of epoch_metric_val:", type(epoch_metric_val))
+                print(f'test_dice_epoch: {epoch_metric_val:.4f}')
                 save_metrics_val.append(to_float(epoch_metric_val))
                 np.save(os.path.join(model_dir, 'metric_test.npy'), save_metrics_val)
 
