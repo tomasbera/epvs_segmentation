@@ -86,14 +86,14 @@ def train_model(model, data, loss, optim, max_epochs, model_dir, test_interval =
 
                 test_epoch_loss /= test_step
                 print(f'test_loss_epoch: {test_epoch_loss:.4f}')
-                print("Type of test_epoch_loss:", type(test_epoch_loss))  # <-- this line
-                save_loss_val.append(test_epoch_loss)
+                print("Type of test_epoch_loss:", type(test_epoch_loss))
+                save_loss_val.append(to_float(test_epoch_loss))
                 np.save(os.path.join(model_dir, 'loss_test.npy'), save_loss_val)
 
                 epoch_metric_val /= test_step
                 print(f'test_dice_epoch: {epoch_metric_val:.4f}')
-                print("Type of epoch_metric_val:", type(epoch_metric_val))  # <-- and this line
-                save_metrics_val.append(epoch_metric_val)
+                print("Type of epoch_metric_val:", type(epoch_metric_val))
+                save_metrics_val.append(to_float(epoch_metric_val))
                 np.save(os.path.join(model_dir, 'metric_test.npy'), save_metrics_val)
 
                 if epoch_metric_val > best_metric:
