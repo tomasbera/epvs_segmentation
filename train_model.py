@@ -5,6 +5,7 @@ import torch
 from helpers import dice_val
 
 def to_float(x):
+    print("loss/epoch metric: ", x)
     if isinstance(x, torch.Tensor):
         return x.detach().cpu().item()  # GPU tensor → float
     return float(x)  # already float
