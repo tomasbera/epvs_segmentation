@@ -49,13 +49,14 @@ def train_model(model, data, loss, optim, max_epochs, model_dir, test_interval =
 
         train_epoch_loss /= train_step
         print(f'Epoch_loss: {train_epoch_loss:.4f}')
-        save_loss_train.append(train_epoch_loss)
+        save_loss_train.append(train_epoch_loss.cpu().numpy())
         np.save(os.path.join(model_dir, 'loss_train.npy'), save_loss_train)
 
         epoch_metric_train /= train_step
         print(f'Epoch_metric: {epoch_metric_train:.4f}')
 
-        save_metrics_train.append(epoch_metric_train)
+        save_metrics_train.append(epoch_metric_train.cpu().numpy())
+
         np.save(os.path.join(model_dir, 'metric_train.npy'), save_metrics_train)
 
         if (epoch + 1) % test_interval == 0:
@@ -82,12 +83,12 @@ def train_model(model, data, loss, optim, max_epochs, model_dir, test_interval =
 
                 test_epoch_loss /= test_step
                 print(f'test_loss_epoch: {test_epoch_loss:.4f}')
-                save_loss_val.append(test_epoch_loss)
+                save_loss_val.append(test_epoch_loss.cpu().numpy())
                 np.save(os.path.join(model_dir, 'loss_test.npy'), save_loss_val)
 
                 epoch_metric_val /= test_step
                 print(f'test_dice_epoch: {epoch_metric_val:.4f}')
-                save_metrics_val.append(epoch_metric_val)
+                save_metrics_val.append(epoch_metric_val.cpu().numpy())
                 np.save(os.path.join(model_dir, 'metric_test.npy'), save_metrics_val)
 
                 if epoch_metric_val > best_metric:
