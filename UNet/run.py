@@ -1,5 +1,5 @@
 import torch
-from monai.losses import DiceLoss, DiceCELoss
+from monai.losses import DiceCELoss
 from monai.networks.layers import Norm
 from monai.networks.nets import UNet
 

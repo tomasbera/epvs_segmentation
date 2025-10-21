@@ -1,10 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
-from ignite.utils import to_onehot
 from ipywidgets import interact
 import SimpleITK as sitk
-import cv2
 from monai.losses import DiceLoss
 from monai.utils import first
 from tqdm import tqdm
